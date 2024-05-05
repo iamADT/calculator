@@ -28,10 +28,19 @@ body{
 }
 
 .calculator-screen{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: nowrap;
     height: 100px;
     background-color: #392727;
     margin: 8px;
+    padding: 8px;
     border-radius: 4px;
+    font-size: 40px;
+    color: #FFDADA;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .calculator-keys{
