@@ -28,19 +28,30 @@ body{
 }
 
 .calculator-screen{
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex-wrap: nowrap;
+    display: block;
     height: 100px;
     background-color: #392727;
     margin: 8px;
     padding: 8px;
     border-radius: 4px;
-    font-size: 40px;
     color: #FFDADA;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    /* overflow-x: scroll;
+    overflow-y: scroll; */
+}
+
+.expression{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 32px;
+}
+
+.result {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end; 
+    color: #FFA500;
+    font-size: 40px; 
 }
 
 .calculator-keys{
@@ -66,7 +77,7 @@ button{
     color: #FFDDB0;
 }
 
-.operator{
+.operator, .equals, .clear-entry {
     background-color: #5D3F40;
 }
 
