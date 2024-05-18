@@ -1,9 +1,9 @@
 function addNumbers(...nums){
-    return nums.reduce((total, num) => total + parseInt(num, 10), 0);
+    return nums.reduce((total, num) => total + parseFloat(num, 10), 0);
 }
 
 function subtractNumbers(...nums){
-    return nums.reduce((total, num) => total - parseInt(num, 10));
+    return nums.reduce((total, num) => total - parseFloat(num, 10));
 }
 
 function multiplyNumbers(...nums){
@@ -23,7 +23,7 @@ function divideNumbers(...nums){
 
 function simpleOperate(total, operator, num){
     switch(operator) {
-        case '+': return total + num;
+        case '+': return parseFloat(total + num);
         case '-': return total - num;
         case 'x': return total * num;
         case '÷': return num !== 0 ? total / num : "sorry cannot divide by zero";
@@ -37,6 +37,7 @@ const operatorKey = document.querySelectorAll(".operator");
 const equals = document.querySelector(".equals");
 const allClear = document.querySelector(".all-clear");
 const clearEntry = document.querySelector(".clear-entry");
+const decimalPoint = document.querySelector(".decimal");
 
 let num = null;
 let operator;
@@ -67,7 +68,7 @@ numbers.forEach(button =>
         appendToScreen(this.textContent);
         adjustFontSize(screen);
         screen.scrollLeft = screen.scrollWidth;
-        currentExpression.push(this.textContent)
+        currentExpression.push(this.textContent);
    })
 )
 
@@ -90,6 +91,34 @@ operatorKey.forEach(button =>
     })
 )
 
+decimalPoint.addEventListener("click", function() {
+    // Determine if the current expression ends with a number (possibly including a decimal)
+    let currentNumber = '';
+    for (let i = currentExpression.length - 1; i >= 0; i--) {
+        if (isNaN(currentExpression[i]) && currentExpression[i] !== '.') {
+            break; // Stop at the first non-number and non-decimal character
+        }
+        currentNumber = currentExpression[i] + currentNumber;
+    }
+
+    // Check if the current number already contains a decimal
+    if (!currentNumber.includes('.')) {
+        if (currentNumber === '') {
+            // If there's no current number, start a new one with '0.'
+            appendToScreen('0.');
+            currentExpression.push('0', '.');
+        } else {
+            // Otherwise, just add a decimal to the existing number
+            appendToScreen('.');
+            currentExpression.push('.');
+        }
+    } else {
+        // If the current number already has a decimal, do nothing
+    }
+    adjustFontSize(screen);
+    screen.scrollLeft = screen.scrollWidth;
+});
+
 
 equals.addEventListener("click", function() {
     let result = 0;
@@ -98,13 +127,13 @@ equals.addEventListener("click", function() {
     let isNewNumber = true;  // Added to track if we are starting a new number
 
     currentExpression.forEach(token => {
-        if(isNaN(parseInt(token))) {  // If it is an operator
+        if(isNaN(parseInt(token)) && token !== '.') {  // If it is an operator
             if (token === '-' && isNewNumber) {
                 currentNumber = token; // Start a negative number
-                isNewNumber = false;   // Now we're not starting a new number anymore
+                isNewNumber = false; 
             } else {
                 if (currentNumber !== '') { // There's a number to operate on
-                    result = simpleOperate(result, lastOperator, parseInt(currentNumber));
+                    result = simpleOperate(parseFloat(result), lastOperator, parseFloat(currentNumber));
                     currentNumber = '';
                 }
                 lastOperator = token;
@@ -117,13 +146,15 @@ equals.addEventListener("click", function() {
     });
 
     if(currentNumber !== '') {  // If there's any leftover number to process
-        result = simpleOperate(result, lastOperator, parseInt(currentNumber));
+        result = simpleOperate(parseFloat(result), lastOperator, parseFloat(currentNumber));
     }
-
+    
     appendToScreen('=', true);
     appendToScreen(result.toString(), true);
     currentExpression = []; // Clear the expression after calculation
 });
+
+
 
 
 // This adjusts the font size when the numbers start to fill up the screen
@@ -142,6 +173,7 @@ function adjustFontSize(screen) {
 allClear.addEventListener("click", function(){
     screen.querySelector(".expression").textContent = '';
     screen.querySelector(".result").textContent = '';
+    currentExpression = [];
 })
 
 clearEntry.addEventListener("click", function(){
