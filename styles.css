@@ -77,7 +77,7 @@ button{
     color: #FFDDB0;
 }
 
-.operator, .equals, .clear-entry, .decimal {
+.operator, .equals, .clear-entry, .decimal, .parenthesis {
     background-color: #5D3F40;
 }
 

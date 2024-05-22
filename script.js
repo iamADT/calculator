@@ -38,6 +38,7 @@ const equals = document.querySelector(".equals");
 const allClear = document.querySelector(".all-clear");
 const clearEntry = document.querySelector(".clear-entry");
 const decimalPoint = document.querySelector(".decimal");
+const parenthesis = document.querySelector(".parenthesis")
 
 let num = null;
 let operator;
@@ -73,14 +74,14 @@ numbers.forEach(button =>
 )
 
 operatorKey.forEach(button =>
-    button.addEventListener("click", function(){
-        if(currentExpression.length > 0 && !isNaN(currentExpression[currentExpression.length - 1])) {
+    button.addEventListener("click", function () {
+        const lastChar = currentExpression[currentExpression.length - 1];
+        if (currentExpression.length > 0 && !isNaN(lastChar)) {
             appendToScreen(this.textContent);
             adjustFontSize(screen);
             screen.scrollLeft = screen.scrollWidth;
             currentExpression.push(this.textContent);
         } else if (this.textContent === '-' && currentExpression.length === 0) {
-            // Allow a minus sign as the first character to support negative numbers
             appendToScreen(this.textContent);
             adjustFontSize(screen);
             screen.scrollLeft = screen.scrollWidth;
@@ -89,7 +90,7 @@ operatorKey.forEach(button =>
             alert("Please start with a number first.");
         }
     })
-)
+);
 
 decimalPoint.addEventListener("click", function() {
     // Determine if the current expression ends with a number (possibly including a decimal)
@@ -118,6 +119,32 @@ decimalPoint.addEventListener("click", function() {
     adjustFontSize(screen);
     screen.scrollLeft = screen.scrollWidth;
 });
+
+parenthesis.addEventListener("click", function(){
+    let parenthesisType ='';
+    for (let i = currentExpression.length - 1; i >= 0; i--) {
+        if((currentExpression[i] === "(") || (currentExpression[i] === ")")){
+            parenthesisType = currentExpression[i];
+            break;
+        }
+        console.log(parenthesisType);
+    }
+
+    if(parenthesisType === "("){
+        currentExpression.push(")");
+        appendToScreen(")");
+        console.log(parenthesisType);
+    }
+    else if(parenthesisType === ")"){
+        currentExpression.push("(");
+        appendToScreen("(");
+    }
+    else {
+        currentExpression.push("(");
+        appendToScreen("(");
+    }
+    
+})
 
 
 equals.addEventListener("click", function() {
