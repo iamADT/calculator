@@ -120,32 +120,6 @@ decimalPoint.addEventListener("click", function() {
     screen.scrollLeft = screen.scrollWidth;
 });
 
-parenthesis.addEventListener("click", function(){
-    let parenthesisType ='';
-    for (let i = currentExpression.length - 1; i >= 0; i--) {
-        if((currentExpression[i] === "(") || (currentExpression[i] === ")")){
-            parenthesisType = currentExpression[i];
-            break;
-        }
-        console.log(parenthesisType);
-    }
-
-    if(parenthesisType === "("){
-        currentExpression.push(")");
-        appendToScreen(")");
-        console.log(parenthesisType);
-    }
-    else if(parenthesisType === ")"){
-        currentExpression.push("(");
-        appendToScreen("(");
-    }
-    else {
-        currentExpression.push("(");
-        appendToScreen("(");
-    }
-    
-})
-
 
 equals.addEventListener("click", function() {
     let result = 0;
@@ -203,9 +177,13 @@ allClear.addEventListener("click", function(){
     currentExpression = [];
 })
 
-clearEntry.addEventListener("click", function(){
-    screen.removeChild(screen.lastChild)
-})
+clearEntry.addEventListener("click", function () {
+    const expression = screen.querySelector(".expression");
+    if (expression.lastChild) {
+        expression.removeChild(expression.lastChild);
+        currentExpression.pop();
+    }
+});
 
 
 

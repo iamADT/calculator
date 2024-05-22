@@ -54,6 +54,18 @@ body{
     font-size: 40px; 
 }
 
+.calculator-clear{
+    display: flex;
+    padding: 16px 8px;
+    justify-content: space-around;
+}
+
+.calculator-clear button {
+    width: fit-content;
+    margin: 4px;
+    border-radius: 8px;
+}
+
 .calculator-keys{
     display: flex;
     flex-wrap: wrap;
