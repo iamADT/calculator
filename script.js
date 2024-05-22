@@ -26,7 +26,7 @@ function simpleOperate(total, operator, num){
         case '+': return parseFloat(total + num);
         case '-': return total - num;
         case 'x': return total * num;
-        case '÷': return num !== 0 ? total / num : "sorry cannot divide by zero";
+        case '÷': return num !== 0 ? total / num : "Error";
         default: return total;
     }
 }
@@ -58,9 +58,11 @@ function appendToScreen(keyPressed, isResult = false){
     
     if (isResult){
         let result = screen.querySelector(".result");
+
         result.appendChild(keyValue)
         keyValue.className = "result"
     }
+        
     
 }
 
@@ -150,8 +152,8 @@ equals.addEventListener("click", function() {
         result = simpleOperate(parseFloat(result), lastOperator, parseFloat(currentNumber));
     }
     
-    appendToScreen('=', true);
-    appendToScreen(result.toString(), true);
+    appendToScreen('', true);
+    appendToScreen(`= ${result.toString()}`, true);
     currentExpression = []; // Clear the expression after calculation
 });
 
